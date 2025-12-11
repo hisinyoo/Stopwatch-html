@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch Sederhana</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #0b66ff;
+            margin-bottom: 20px;
+        }
+
+        .stopwatch {
+            font-size: 42px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            margin: 0 10px;
+            cursor: pointer;
+            color: white;
+            transition: 0.25s;
+        }
+
+        .start { background: #16a34a; }
+        .stop { background: #dc2626; }
+        .reset { background: #0b66ff; }
+
+        button:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Stopwatch Sederhana</h1>
+
+    <div class="stopwatch" id="display">00:00:00</div>
+
+    <div>
+        <button class="start" onclick="startTimer()">Mulai</button>
+        <button class="stop" onclick="stopTimer()">Berhenti</button>
+        <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+
+    <script>
+        let seconds = 0;
+        let interval = null;
+
+        function updateDisplay() {
+            let hrs = Math.floor(seconds / 3600);
+            let mins = Math.floor((seconds % 3600) / 60);
+            let secs = seconds % 60;
+
+            document.getElementById("display").innerText =
+                `${hrs.toString().padStart(2, '0')}:` +
+                `${mins.toString().padStart(2, '0')}:` +
+                `${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (interval) return;
+            interval = setInterval(() => {
+                seconds++;
+                updateDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(interval);
+            interval = null;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            seconds = 0;
+            updateDisplay();
+        }
+    </script>
+
+</body>
+</html>
